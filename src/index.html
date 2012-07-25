@@ -18,7 +18,7 @@
     <meta name="og:title" content="Sixteen Colors Draw - ANSI Editor"/>
     <meta name="og:type" content="website"/>
     <meta name="og:description" content="Create and edit ANSI and ASCII art in your browser!" />
-
+    <script src="http://localhost:8000/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div id=splash>
@@ -104,6 +104,10 @@
         <div id=cursor></div>
         <canvas id=canvas></canvas>
         <canvas id="vga"></canvas>
+        <div id=users>
+            <ul>                
+            </ul>
+        </div>
     </div>
 </body>
 </html>

@@ -320,3 +320,21 @@ a:hover {
 #drawings div {
     margin-bottom: 1em;
 }
+
+/* USER LIST */
+#users {
+    background: white;
+    -moz-opacity: 0.7;
+    opacity: 0.7;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    filter: alpha(opacity=70);    
+}
+
+#users ul {
+    overflow: auto;
+}
+
+#users li {
+    float: left;
+    white-space: nowrap;
+}

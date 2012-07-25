@@ -37,6 +37,24 @@ class @Editor
         this[k] = v for own k, v of options
 
     init: ->
+        @socket = io.connect('http://localhost:8000');
+        @socket.on('connect', () => 
+            @socket.emit('set nickname', prompt('What is your nickname?'));
+        )
+
+        @socket.on('putChar', (user, data) =>
+            console.log('character received from ' + user)
+            if !@grid[data.y]?
+                @grid[data.y] = []
+            @grid[data.y][data.x] = data.char
+            @draw()
+        )
+
+        @socket.on('join', (user) =>
+            console.log(user + ' joined the canvas')
+            $('#users').append('<li>' + user + '</li>')
+        )
+
         @font = @loadFont()
         @canvas = document.getElementById @id
         @width = @canvas.clientWidth 
@@ -501,6 +519,7 @@ class @Editor
             @grid[@cursor.y][@cursor.x + 1..] = row
         @grid[@cursor.y][@cursor.x] = { ch: String.fromCharCode( charCode ), attr: ( @pal.bg << 4 ) | @pal.fg }
         @drawChar(@cursor.x, @cursor.y)
+        @socket.emit('putChar', { char: @grid[@cursor.y][@cursor.x], x: @cursor.x, y: @cursor.y})
         unless holdCursor then @cursor.moveRight()
         @updateCursorPosition()
 
