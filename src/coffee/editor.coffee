@@ -34,6 +34,7 @@ class @Editor
         @id = 'canvas'
         @vga_id = 'vga'
         @vga_scale = '.25'
+        @columns = 80
         this[k] = v for own k, v of options
 
     init: ->
@@ -57,7 +58,7 @@ class @Editor
 
         @font = @loadFont()
         @canvas = document.getElementById @id
-        @width = @canvas.clientWidth 
+        @width = @columns * @font.width
         @height = @canvas.clientHeight
         @canvas.setAttribute 'width', @width
         @canvas.setAttribute 'height', @height
