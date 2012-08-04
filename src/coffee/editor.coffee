@@ -38,9 +38,20 @@ class @Editor
         this[k] = v for own k, v of options
 
     init: ->
-        @socket = io.connect('http://localhost:8000');
+        @socket = io.connect('http://localhost:8000')
         @socket.on('connect', () => 
-            @socket.emit('set nickname', prompt('What is your nickname?'));
+            @socket.emit('adduser', prompt('What is your nickname?'))
+        )
+
+        @socket.on('updatechat', (username, data) =>
+            $('#conversation').append('<strong>'+username + ':</strong> ' + data + '<br />')
+        )
+
+        @socket.on('updateusers', (data) =>
+            $('#users ul').empty()
+            $.each(data, (key, value) =>
+                $('#users ul').append('<li>' + key + '</li>')
+            )
         )
 
         @socket.on('putChar', (user, data) =>
@@ -53,7 +64,7 @@ class @Editor
 
         @socket.on('join', (user) =>
             console.log(user + ' joined the canvas')
-            $('#users').append('<li>' + user + '</li>')
+            $('#users ul').append('<li>' + user + '</li>')
         )
 
         @font = @loadFont()
